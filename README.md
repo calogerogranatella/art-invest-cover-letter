@@ -1,6 +1,6 @@
 # Art-Invest Bewerbungsschreiben
 
-Eine digitale, interaktive Bewerbung, die speziell für die Rolle als **Fundmanager Hotelimmobilien** bei Art-Invest entwickelt wurde.
+Eine digitale, interaktive Bewerbung, die speziell für die Rolle als **Fondmanager Hotelimmobilien** bei Art-Invest entwickelt wurde.
 
 Anstelle eines klassischen, statischen PDFs nutzt dieses Projekt eine maßgeschneiderte "Bento Box"-Benutzeroberfläche, um mein strategisches Mindset, meinen operativen Hintergrund und meine technischen Fähigkeiten in einem modernen und ansprechenden Format zu präsentieren. 
 
