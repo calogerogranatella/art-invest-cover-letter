@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calogero Granatella | Interaktives Bewerbungsschreiben</title>
+    
+    <!-- Inline SVG Favicon (No external file needed) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='10' width='80' height='80' rx='12' fill='none' stroke='%233B7A56' stroke-width='10'/%3E%3Cline x1='10' y1='40' x2='90' y2='40' stroke='%233B7A56' stroke-width='10'/%3E%3Cline x1='35' y1='40' x2='35' y2='90' stroke='%233B7A56' stroke-width='10'/%3E%3C/svg%3E" type="image/svg+xml">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -100,7 +104,7 @@
             height: 100%;
         }
 
-        /* Color Assignments (Swapped Tool/Foundation as requested previously) */
+        /* Color Assignments */
         .box-anchor { grid-area: anchor; background-color: var(--brand-green); }
         .box-strategy { grid-area: strategy; background-color: var(--shade-5); }
         .box-network { grid-area: network; background-color: var(--shade-2); }
@@ -147,14 +151,14 @@
 
         @media (max-width: 1024px) {
             body {
-                padding: 0 0 40px 0; /* Remove horizontal padding so header spans full width */
+                padding: 0 0 40px 0;
             }
             .header-wrapper {
                 position: sticky;
                 top: 0;
                 background-color: var(--bg-color);
                 border-bottom: 1px solid rgba(255,255,255,0.05);
-                padding: 16px 20px; /* Padding inside the full-width header */
+                padding: 16px 20px;
                 margin-bottom: 20px;
             }
             .header-text {
@@ -172,7 +176,7 @@
                 min-height: 0;
                 overflow: visible;
                 padding: 16px;
-                margin: 0 20px; /* Keeps the bento box away from screen edges */
+                margin: 0 20px;
                 width: auto;
             }
             .bento-grid {
@@ -187,7 +191,6 @@
                 justify-content: flex-start;
             }
             
-            /* Toggle behavior on Mobile/iPad via JS class */
             .asset-box.active .content {
                 opacity: 1;
                 max-height: 1000px;
@@ -229,7 +232,6 @@
     <div class="bento-shell">
         <div class="bento-grid">
             
-            <!-- Box 1: Why Art-Invest -->
             <div class="asset-box box-anchor" onclick="toggleBox(this)">
                 <h3>Wieso Art-Invest?</h3>
                 <div class="content">
@@ -237,7 +239,6 @@
                 </div>
             </div>
 
-            <!-- Box 2 (Statement): Mehr Wert als Erfahrung -->
             <div class="asset-box box-strategy" onclick="toggleBox(this)">
                 <h3>Mehr Wert als nur Erfahrung</h3>
                 <div class="content">
@@ -245,7 +246,6 @@
                 </div>
             </div>
 
-            <!-- Box 3 (Mid-Left): International Mindset -->
             <div class="asset-box box-network" onclick="toggleBox(this)">
                 <h3>Internationales Mindset in Deutschland geboren</h3>
                 <div class="content">
@@ -253,7 +253,6 @@
                 </div>
             </div>
 
-            <!-- Box 4: Digitaler CV -->
             <div class="asset-box box-tool" onclick="handleCvClick(event)">
                 <h3>Digitaler CV</h3>
                 <div class="content">
@@ -261,7 +260,6 @@
                 </div>
             </div>
 
-            <!-- Box 5: Operative Wurzeln -->
             <div class="asset-box box-foundation" onclick="toggleBox(this)">
                 <h3>Operative Wurzeln</h3>
                 <div class="content">
@@ -269,7 +267,6 @@
                 </div>
             </div>
 
-            <!-- Box 6: Finanzen -->
             <div class="asset-box box-vision" onclick="toggleBox(this)">
                 <h3>Blühen in Finanzen</h3>
                 <div class="content">
@@ -290,9 +287,7 @@
 
     <script>
         function toggleBox(element) {
-            // Only toggle if we are in mobile/tablet mode (1024px or less)
             if (window.innerWidth <= 1024) {
-                // Close any other open boxes to create an accordion effect
                 const allBoxes = document.querySelectorAll('.asset-box');
                 allBoxes.forEach(box => {
                     if (box !== element && box.classList.contains('active')) {
@@ -305,11 +300,9 @@
         }
 
         function handleCvClick(event) {
-            // CV Box logic: Always link out, but toggle description on mobile first if needed
             if (window.innerWidth <= 1024) {
                 const box = event.currentTarget;
                 if (!box.classList.contains('active')) {
-                    // Close any other open boxes
                     const allBoxes = document.querySelectorAll('.asset-box');
                     allBoxes.forEach(b => {
                         if (b !== box && b.classList.contains('active')) {
