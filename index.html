@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calogero Granatella | Fund Manager Application</title>
+    <title>Calogero Granatella | Interaktives Bewerbungsschreiben</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --bg-color: #393939;      /* Lighter Grey from image_f073f5.png */
-            --box-wood: #222222;      /* Dark Grey Wood from image_f073f5.png */
-            --brand-green: #3B7A56;   /* Art-Invest Green from image_f073f5.png */
-            --off-white: #F5F5F5;     /* Soft Off-White Text */
-            --accent-grey: #4a4a4a;
-            --box-shadow-depth: 0 40px 100px rgba(0,0,0,0.6);
+            --bg-color: #393939;      
+            --box-wood: #222222;      
+            
+            /* Art-Invest Brand Green & Mossy Shades */
+            --brand-green: #3B7A56;   
+            --shade-2: #334B3D;       
+            --shade-3: #2C3A33;       
+            --shade-4: #262E2A;       
+            --shade-5: #212523;       
+            --shade-6: #1C1F1E;       
+            
+            --off-white: #F5F5F5;     
+            /* Cinematic 1.2s transition time */
+            --transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         body {
             background-color: var(--bg-color);
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
             color: var(--off-white);
-            overflow: hidden;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .bento-shell {
@@ -34,70 +43,79 @@
             padding: 24px;
             border-radius: 16px;
             box-shadow: 
-                var(--box-shadow-depth),
-                inset 2px 2px 5px rgba(255,255,255,0.05),
-                inset -2px -2px 5px rgba(0,0,0,0.5);
-            border: 10px solid #1a1a1a; /* Matt wood frame */
-            max-width: 1100px;
+                0 50px 100px rgba(0,0,0,0.5),
+                inset 2px 2px 10px rgba(255,255,255,0.03);
+            border: 12px solid #1a1a1a; 
             width: 100%;
-            height: 750px; /* Constrained height for desktop view */
-            position: relative;
+            max-width: 1200px;
+            height: 70vh;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .bento-grid {
             display: grid;
-            grid-template-columns: 1.5fr 0.8fr 1.2fr; /* Asymmetric grid columns */
-            grid-template-rows: 1.2fr 0.8fr 1.2fr;   /* Asymmetric grid rows */
+            grid-template-columns: 1.2fr 0.8fr 1fr;
+            grid-template-rows: 1.2fr 0.8fr 1fr;
+            grid-template-areas: 
+                "anchor anchor strategy"
+                "network tool strategy"
+                "foundation vision vision";
             gap: 16px;
             height: 100%;
             width: 100%;
         }
 
         .asset-box {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 8px;
+            padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.02);
         }
 
+        .box-anchor { grid-area: anchor; background-color: var(--brand-green); }
+        .box-strategy { grid-area: strategy; background-color: var(--shade-5); }
+        .box-network { grid-area: network; background-color: var(--shade-2); }
+        .box-tool { grid-area: tool; background-color: var(--shade-3); }       
+        .box-foundation { grid-area: foundation; background-color: var(--shade-6); } 
+        .box-vision { grid-area: vision; background-color: var(--shade-4); }
+
         .asset-box:hover {
-            transform: translateY(-4px) scale(1.01);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.015);
+            z-index: 10;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(255, 255, 255, 0.1);
+            filter: brightness(1.15);
         }
 
         .asset-box h3 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: clamp(0.85rem, 1vw, 1.1rem);
             font-weight: 600;
             color: var(--off-white);
-            transition: all 0.3s ease;
-            letter-spacing: -0.01em;
             text-transform: uppercase;
-        }
-
-        .asset-box:hover h3 {
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.12em;
+            transition: var(--transition);
         }
 
         .asset-box .content {
-            font-size: 0.9rem;
+            font-size: clamp(0.7rem, 0.8vw, 0.9rem);
             opacity: 0;
             max-height: 0;
-            transition: all 0.5s ease;
-            color: rgba(245, 245, 245, 0.7);
+            transition: var(--transition);
+            color: rgba(245, 245, 245, 0.85);
             line-height: 1.6;
+            font-weight: 300;
+            margin-top: 0;
         }
 
         .asset-box:hover .content {
@@ -106,160 +124,131 @@
             margin-top: 12px;
         }
 
-        
-        /* Box A: The Anchor (Top-Left Large) */
-        .anchor {
-            grid-column: 1 / 3;
-            grid-row: 1;
-            background: linear-gradient(135deg, var(--brand-green) 0%, #2d5d42 100%);
-            border: none;
+        /* Responsive Mobile Behavior */
+        @media (max-width: 700px) {
+            body {
+                height: auto;
+                padding: 40px 20px;
+            }
+            .bento-shell {
+                height: auto;
+                max-height: none;
+                min-height: 0;
+                overflow: visible;
+            }
+            .bento-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .asset-box {
+                min-height: 160px;
+                justify-content: center;
+            }
+            .asset-box .content {
+                opacity: 1;
+                max-height: none;
+                margin-top: 10px;
+            }
         }
 
-        /* Box C: The Tool (The nested small square) */
-        .tool {
-            grid-column: 2;
-            grid-row: 2;
-            background: rgba(57, 57, 57, 0.5);
-        }
-
-        /* Box B: The Strategy (Tall Right Side) */
-        .strategy {
-            grid-column: 3;
-            grid-row: 1 / 3;
-            background: rgba(34, 34, 34, 0.6);
-        }
-
-        /* Box D: The Foundation (Wide Bottom) */
-        .foundation {
-            grid-column: 1 / 3;
-            grid-row: 3;
-            background: rgba(34, 34, 34, 0.6);
-        }
-
-        /* Box E: The Vision (Bottom Right) */
-        .vision {
-            grid-column: 3;
-            grid-row: 3;
-            background: rgba(57, 57, 57, 0.5);
-        }
-
-        .bento-header {
-            position: absolute;
-            top: -50px;
-            left: 0;
+        .header-text {
             width: 100%;
+            max-width: 1200px;
+            margin-bottom: 1.2rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0 10px;
+            align-items: flex-end;
         }
 
-        .bento-header .title-badge {
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--brand-green);
-        }
-
-        .bento-header .main-name {
-            font-size: 1.4rem;
-            font-weight: 300;
-            color: var(--off-white);
-        }
-
-        /* Scrollbar styling for content */
-        .content::-webkit-scrollbar {
-            width: 3px;
-        }
-        .content::-webkit-scrollbar-thumb {
-            background: var(--brand-green);
-            border-radius: 10px;
+        .cta-container {
+            margin-top: 1.5rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="relative w-full max-w-5xl">
-        <div class="bento-header">
-            <div>
-                <div class="title-badge">Strategic Fund Proposal</div>
-                <div class="main-name">Calogero Granatella</div>
-            </div>
-            <div class="text-right">
-                <div class="title-badge">Target Unit</div>
-                <div class="main-name" style="font-size: 1rem;">Hospitality Fund Management</div>
-            </div>
+    <div class="header-text px-4">
+        <div>
+            <span class="text-[var(--brand-green)] text-xs font-bold tracking-[0.4em] uppercase opacity-80">Interaktives Bewerbungsschreiben</span>
+            <h1 class="text-3xl md:text-4xl font-light text-[var(--off-white)] mt-1">Calogero Granatella</h1>
         </div>
+        <div class="text-right hidden md:block">
+            <span class="text-[var(--off-white)] opacity-30 text-xs uppercase tracking-widest">Target Role:</span>
+            <p class="text-base font-semibold opacity-90">Fondmanager Hotelimmobilien</p>
+        </div>
+    </div>
 
-        <div class="bento-shell">
-            <div class="bento-grid">
-                
-                <!-- Box 1: Why Art-Invest? (Anchor) -->
-                <div class="asset-box anchor">
-                    <h3>Why Art-Invest?</h3>
-                    <div class="content overflow-y-auto">
-                        I am returning to the Rhineland to join a firm that defines the "Day One" mentality. I align with Art-Invest’s unique ability to merge institutional precision with entrepreneurial agility. I am not looking to just manage square footage, but to create the architectural and operational benchmarks that define the next cycle of hospitality.
-                    </div>
+    <div class="bento-shell">
+        <div class="bento-grid">
+            
+            <!-- Box 1: Why Art-Invest -->
+            <div class="asset-box box-anchor">
+                <h3>Wieso Art-Invest?</h3>
+                <div class="content">
+                    Von der ersten Interaktion mit Jeremias, einem Eurer Investmentmanager, über die Unternehmensphilosophie der vertikalen Integration, bis zur Nähe zu meinem Zuhause. Auf den ersten Blick verspricht Art-Invest ein tolles Arbeitsklima, spannende Projekte und eine Anbindung an einen Hotelmarkt, in dem ich aufgewachsen bin.
                 </div>
-
-                <!-- Box 2: Digital Innovation (The Tool) -->
-                <div class="asset-box tool">
-                    <h3>The Tool</h3>
-                    <div class="content">
-                        In modern fund management, data is the primary asset. This application is my proof-of-concept: I don't wait for tools to be built—I build them. Using Python and modern web tech to ensure real-time transparency for stakeholders.
-                    </div>
-                </div>
-
-                <!-- Box 3: Global Strategy (The Right Pillar) -->
-                <div class="asset-box strategy">
-                    <h3>Global Strategy</h3>
-                    <div class="content overflow-y-auto">
-                        From luxury development at NEOM to high-stakes project management in Zurich. I bridge the gap between abstract brand vision and concrete financial performance, specializing in asset-light management models and luxury positioning on an international scale.
-                    </div>
-                </div>
-
-                <!-- Box 4: Operational Roots (The Foundation) -->
-                <div class="asset-box foundation">
-                    <h3>Operational Roots</h3>
-                    <div class="content overflow-y-auto">
-                        I believe a Fund Manager must know the unit-level economics of the asset. My background as a chef taught me the rigor of cost control and high-pressure execution. I understand how the 'engine room' functions, identifying yield opportunities invisible from a spreadsheet.
-                    </div>
-                </div>
-
-                <!-- Box 5: Local Focus (The Vision) -->
-                <div class="asset-box vision">
-                    <h3>Cologne & Beyond</h3>
-                    <div class="content">
-                        Settled in Alfter/Oedekoven, I am personally and professionally committed to the region. I bring a Swiss standard of precision back home to ensure your hospitality portfolio outperforms the national market.
-                    </div>
-                </div>
-
             </div>
-        </div>
 
-        <div class="mt-8 flex justify-center">
-            <a href="mailto:your-email@example.com?subject=Art-Invest%20Interview%20-%20Calogero%20Granatella" 
-               class="px-10 py-3 rounded-full font-bold transition-all hover:tracking-widest flex items-center gap-2 group"
-               style="background: var(--brand-green); color: var(--off-white); text-decoration: none; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                INITIATE DUE DILIGENCE 
-                <span class="group-hover:translate-x-1 transition-transform">→</span>
-            </a>
+            <!-- Box 2: International Mindset -->
+            <div class="asset-box box-strategy">
+                <h3>Internationales Mindset in Deutschland geboren</h3>
+                <div class="content">
+                    Meine Karriere habe ich in einer deutschen Hotelkette – Althoff Hotels – angefangen, um dann bald zu einem der internationalsten Unternehmen zu gehen – NEOM. So bringe ich sowohl Verständnis und Gespür für deutsche Kultur, als auch internationale Erfahrung und Expat-Standards mit.
+                </div>
+            </div>
+
+            <!-- Box 3: Personal Value Statement -->
+            <div class="asset-box box-network">
+                <h3>Mehr Wert als nur Erfahrung</h3>
+                <div class="content">
+                    Egal, was in den nächsten Kacheln so steht, am wichtigsten ist mir, Wert durch Menschlichkeit und Ambition zu schaffen. Ich bringe Freude und Herzlichkeit, wo möglich. Ich verspüre Ernsthaftigkeit und Respekt, wo nötig. Und ich tue Dinge ungefragt, für die andere gefragt werden müssen. Und so erwarte ich das auch von meinen Kollegen und Arbeitgebern.
+                </div>
+            </div>
+
+            <!-- Box 4: Digitaler CV -->
+            <div class="asset-box box-tool" onclick="window.open('https://calogerogranatella.github.io/', '_blank')">
+                <h3>Digitaler CV</h3>
+                <div class="content">
+                    Hier klicken, um meinen digitalen, interaktiven CV zu sehen.
+                </div>
+            </div>
+
+            <!-- Box 5: Operational Foundation -->
+            <div class="asset-box box-foundation">
+                <h3>Operative Wurzeln</h3>
+                <div class="content">
+                    Mit meiner Kochausbildung verstehe ich Hotels sowohl von innen nach außen – vom Kühlhaus zum Gast – als auch von außen nach innen – vom Gast zum Koch. So habe ich gelernt, dass der Wert eines Hotels nicht bei der Marke oder dem Management liegt, sondern in der Operativen.
+                </div>
+            </div>
+
+            <!-- Box 6: Finance Passion -->
+            <div class="asset-box box-vision">
+                <h3>Blühen in Finanzen</h3>
+                <div class="content">
+                    Seit dem Studium blühe ich für Zahlen und Muster. Ob als Jahrgangsbester in Finance. Der, der von Freunden um Hilfe bei Interviews für Investmentrollen gebeten wurde. Oder bei NEOM von Feasibility Manager zum Software-Produktmanager im Asset-Management. Finanzen liegen mir.
+                </div>
+            </div>
+
         </div>
+    </div>
+
+    <div class="cta-container">
+        <a href="mailto:c.granatella@example.com?subject=Art-Invest%20Bewerbung%20-%20Calogero%20Granatella" 
+           class="px-12 py-4 rounded-full font-bold transition-all hover:tracking-widest flex items-center gap-6 group border-2 border-[var(--brand-green)] hover:bg-[var(--brand-green)] text-[var(--off-white)] no-underline">
+            INITIATE DUE DILIGENCE 
+            <span class="group-hover:translate-x-3 transition-transform">→</span>
+        </a>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const shell = document.querySelector('.bento-shell');
-            shell.style.opacity = '0';
-            shell.style.transform = 'translateY(30px)';
-            
-            setTimeout(() => {
-                shell.style.transition = 'all 1.2s cubic-bezier(0.23, 1, 0.32, 1)';
-                shell.style.opacity = '1';
-                shell.style.transform = 'translateY(0)';
-            }, 200);
+            console.log("Strategic Portfolio Fully Finalized | User: Calogero Granatella");
         });
     </script>
+
 </body>
 </html>
