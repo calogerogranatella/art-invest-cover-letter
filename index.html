@@ -65,18 +65,17 @@
             border: 12px solid #1a1a1a; 
             width: 100%;
             max-width: 1200px;
-            height: 70vh; /* Desktop Default */
+            height: 70vh;
             min-height: 500px;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
             overflow: hidden;
-            transition: height 0.5s ease;
         }
 
         .bento-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr 1fr;
+            grid-template-columns: 1.4fr 0.7fr 0.9fr;
             grid-template-rows: 1.2fr 0.8fr 1fr;
             grid-template-areas: 
                 "anchor anchor strategy"
@@ -274,6 +273,14 @@
         function toggleBox(element) {
             // Only toggle if we are in mobile/tablet mode (1024px or less)
             if (window.innerWidth <= 1024) {
+                // Close any other open boxes to create an accordion effect
+                const allBoxes = document.querySelectorAll('.asset-box');
+                allBoxes.forEach(box => {
+                    if (box !== element && box.classList.contains('active')) {
+                        box.classList.remove('active');
+                    }
+                });
+                
                 element.classList.toggle('active');
             }
         }
@@ -283,6 +290,14 @@
             if (window.innerWidth <= 1024) {
                 const box = event.currentTarget;
                 if (!box.classList.contains('active')) {
+                    // Close any other open boxes
+                    const allBoxes = document.querySelectorAll('.asset-box');
+                    allBoxes.forEach(b => {
+                        if (b !== box && b.classList.contains('active')) {
+                            b.classList.remove('active');
+                        }
+                    });
+
                     box.classList.add('active');
                     return;
                 }
@@ -291,7 +306,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("Mobile-First Portfolio Engine Active | Sticky Header Configured");
+            console.log("Mobile-First Portfolio Engine Active | Accordion Logic Configured");
         });
     </script>
 
