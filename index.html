@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calogero Granatella | Fund Manager Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #393939;      /* Lighter Grey from image_f073f5.png */
+            --box-wood: #222222;      /* Dark Grey Wood from image_f073f5.png */
+            --brand-green: #3B7A56;   /* Art-Invest Green from image_f073f5.png */
+            --off-white: #F5F5F5;     /* Soft Off-White Text */
+            --accent-grey: #4a4a4a;
+            --box-shadow-depth: 0 40px 100px rgba(0,0,0,0.6);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--off-white);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .bento-shell {
+            background-color: var(--box-wood);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                var(--box-shadow-depth),
+                inset 2px 2px 5px rgba(255,255,255,0.05),
+                inset -2px -2px 5px rgba(0,0,0,0.5);
+            border: 10px solid #1a1a1a; /* Matt wood frame */
+            max-width: 1100px;
+            width: 100%;
+            height: 750px; /* Constrained height for desktop view */
+            position: relative;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr 1.2fr; /* Asymmetric grid columns */
+            grid-template-rows: 1.2fr 0.8fr 1.2fr;   /* Asymmetric grid rows */
+            gap: 16px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .asset-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .asset-box:hover {
+            transform: translateY(-4px) scale(1.01);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .asset-box h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--off-white);
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        .asset-box:hover h3 {
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .asset-box .content {
+            font-size: 0.9rem;
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.5s ease;
+            color: rgba(245, 245, 245, 0.7);
+            line-height: 1.6;
+        }
+
+        .asset-box:hover .content {
+            opacity: 1;
+            max-height: 300px;
+            margin-top: 12px;
+        }
+
+        
+        /* Box A: The Anchor (Top-Left Large) */
+        .anchor {
+            grid-column: 1 / 3;
+            grid-row: 1;
+            background: linear-gradient(135deg, var(--brand-green) 0%, #2d5d42 100%);
+            border: none;
+        }
+
+        /* Box C: The Tool (The nested small square) */
+        .tool {
+            grid-column: 2;
+            grid-row: 2;
+            background: rgba(57, 57, 57, 0.5);
+        }
+
+        /* Box B: The Strategy (Tall Right Side) */
+        .strategy {
+            grid-column: 3;
+            grid-row: 1 / 3;
+            background: rgba(34, 34, 34, 0.6);
+        }
+
+        /* Box D: The Foundation (Wide Bottom) */
+        .foundation {
+            grid-column: 1 / 3;
+            grid-row: 3;
+            background: rgba(34, 34, 34, 0.6);
+        }
+
+        /* Box E: The Vision (Bottom Right) */
+        .vision {
+            grid-column: 3;
+            grid-row: 3;
+            background: rgba(57, 57, 57, 0.5);
+        }
+
+        .bento-header {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .bento-header .title-badge {
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brand-green);
+        }
+
+        .bento-header .main-name {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--off-white);
+        }
+
+        /* Scrollbar styling for content */
+        .content::-webkit-scrollbar {
+            width: 3px;
+        }
+        .content::-webkit-scrollbar-thumb {
+            background: var(--brand-green);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="relative w-full max-w-5xl">
+        <div class="bento-header">
+            <div>
+                <div class="title-badge">Strategic Fund Proposal</div>
+                <div class="main-name">Calogero Granatella</div>
+            </div>
+            <div class="text-right">
+                <div class="title-badge">Target Unit</div>
+                <div class="main-name" style="font-size: 1rem;">Hospitality Fund Management</div>
+            </div>
+        </div>
+
+        <div class="bento-shell">
+            <div class="bento-grid">
+                
+                <!-- Box 1: Why Art-Invest? (Anchor) -->
+                <div class="asset-box anchor">
+                    <h3>Why Art-Invest?</h3>
+                    <div class="content overflow-y-auto">
+                        I am returning to the Rhineland to join a firm that defines the "Day One" mentality. I align with Art-Invest’s unique ability to merge institutional precision with entrepreneurial agility. I am not looking to just manage square footage, but to create the architectural and operational benchmarks that define the next cycle of hospitality.
+                    </div>
+                </div>
+
+                <!-- Box 2: Digital Innovation (The Tool) -->
+                <div class="asset-box tool">
+                    <h3>The Tool</h3>
+                    <div class="content">
+                        In modern fund management, data is the primary asset. This application is my proof-of-concept: I don't wait for tools to be built—I build them. Using Python and modern web tech to ensure real-time transparency for stakeholders.
+                    </div>
+                </div>
+
+                <!-- Box 3: Global Strategy (The Right Pillar) -->
+                <div class="asset-box strategy">
+                    <h3>Global Strategy</h3>
+                    <div class="content overflow-y-auto">
+                        From luxury development at NEOM to high-stakes project management in Zurich. I bridge the gap between abstract brand vision and concrete financial performance, specializing in asset-light management models and luxury positioning on an international scale.
+                    </div>
+                </div>
+
+                <!-- Box 4: Operational Roots (The Foundation) -->
+                <div class="asset-box foundation">
+                    <h3>Operational Roots</h3>
+                    <div class="content overflow-y-auto">
+                        I believe a Fund Manager must know the unit-level economics of the asset. My background as a chef taught me the rigor of cost control and high-pressure execution. I understand how the 'engine room' functions, identifying yield opportunities invisible from a spreadsheet.
+                    </div>
+                </div>
+
+                <!-- Box 5: Local Focus (The Vision) -->
+                <div class="asset-box vision">
+                    <h3>Cologne & Beyond</h3>
+                    <div class="content">
+                        Settled in Alfter/Oedekoven, I am personally and professionally committed to the region. I bring a Swiss standard of precision back home to ensure your hospitality portfolio outperforms the national market.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+            <a href="mailto:your-email@example.com?subject=Art-Invest%20Interview%20-%20Calogero%20Granatella" 
+               class="px-10 py-3 rounded-full font-bold transition-all hover:tracking-widest flex items-center gap-2 group"
+               style="background: var(--brand-green); color: var(--off-white); text-decoration: none; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                INITIATE DUE DILIGENCE 
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const shell = document.querySelector('.bento-shell');
+            shell.style.opacity = '0';
+            shell.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                shell.style.transition = 'all 1.2s cubic-bezier(0.23, 1, 0.32, 1)';
+                shell.style.opacity = '1';
+                shell.style.transform = 'translateY(0)';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
