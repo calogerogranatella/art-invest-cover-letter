@@ -20,7 +20,7 @@
             --shade-6: #1C1F1E;       
             
             --off-white: #F5F5F5;     
-            /* Kinoreife 1.2s Übergangszeit */
+            /* Cinematic 1.2s transition for premium feel */
             --transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -29,13 +29,30 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
             color: var(--off-white);
-            padding: 20px;
+            padding: 0 20px 40px 20px;
             box-sizing: border-box;
+        }
+
+        .header-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0 20px 0;
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+
+        .header-text {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 10px;
         }
 
         .bento-shell {
@@ -48,12 +65,13 @@
             border: 12px solid #1a1a1a; 
             width: 100%;
             max-width: 1200px;
-            height: 70vh;
+            height: 70vh; /* Desktop Default */
             min-height: 500px;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
             overflow: hidden;
+            transition: height 0.5s ease;
         }
 
         .bento-grid {
@@ -80,8 +98,10 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.02);
+            height: 100%;
         }
 
+        /* Color Assignments (Swapped Tool/Foundation as requested previously) */
         .box-anchor { grid-area: anchor; background-color: var(--brand-green); }
         .box-strategy { grid-area: strategy; background-color: var(--shade-5); }
         .box-network { grid-area: network; background-color: var(--shade-2); }
@@ -118,23 +138,28 @@
             margin-top: 0;
         }
 
-        .asset-box:hover .content {
-            opacity: 1;
-            max-height: 300px;
-            margin-top: 12px;
+        @media (min-width: 1025px) {
+            .asset-box:hover .content {
+                opacity: 1;
+                max-height: 300px;
+                margin-top: 12px;
+            }
         }
 
-        /* Responsive Mobile Anpassung */
-        @media (max-width: 700px) {
-            body {
-                height: auto;
-                padding: 40px 20px;
+        @media (max-width: 1024px) {
+            .header-wrapper {
+                position: sticky;
+                top: 0;
+                background-color: var(--bg-color);
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                padding: 20px 0;
             }
             .bento-shell {
                 height: auto;
                 max-height: none;
                 min-height: 0;
                 overflow: visible;
+                padding: 16px;
             }
             .bento-grid {
                 display: flex;
@@ -142,27 +167,26 @@
                 gap: 12px;
             }
             .asset-box {
-                min-height: 160px;
-                justify-content: center;
+                height: auto;
+                min-height: 100px;
+                padding: 24px;
+                justify-content: flex-start;
             }
-            .asset-box .content {
+            
+            /* Toggle behavior on Mobile/iPad via JS class */
+            .asset-box.active .content {
                 opacity: 1;
-                max-height: none;
-                margin-top: 10px;
+                max-height: 1000px;
+                margin-top: 16px;
             }
-        }
-
-        .header-text {
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            
+            .asset-box.active {
+                filter: brightness(1.1);
+            }
         }
 
         .cta-container {
-            margin-top: 1.5rem;
+            margin-top: 2.5rem;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -171,14 +195,16 @@
 </head>
 <body>
 
-    <div class="header-text px-4">
-        <div>
-            <span class="text-[var(--brand-green)] text-xs font-bold tracking-[0.4em] uppercase opacity-80">Interaktives Bewerbungsschreiben</span>
-            <h1 class="text-3xl md:text-4xl font-light text-[var(--off-white)] mt-1">Calogero Granatella</h1>
-        </div>
-        <div class="text-right hidden md:block">
-            <span class="text-[var(--off-white)] opacity-30 text-xs uppercase tracking-widest">Target Role:</span>
-            <p class="text-base font-semibold opacity-90">Fondmanager Hotelimmobilien</p>
+    <div class="header-wrapper">
+        <div class="header-text px-4">
+            <div>
+                <span class="text-[var(--brand-green)] text-xs font-bold tracking-[0.4em] uppercase opacity-80">Interaktives Bewerbungsschreiben</span>
+                <h1 class="text-2xl md:text-4xl font-light text-[var(--off-white)] mt-1">Calogero Granatella</h1>
+            </div>
+            <div class="text-right">
+                <span class="text-[var(--off-white)] opacity-30 text-xs uppercase tracking-widest block">Target Role:</span>
+                <p class="text-sm md:text-base font-semibold opacity-90">Fondmanager Hotelimmobilien</p>
+            </div>
         </div>
     </div>
 
@@ -186,23 +212,23 @@
         <div class="bento-grid">
             
             <!-- Box 1: Why Art-Invest -->
-            <div class="asset-box box-anchor">
+            <div class="asset-box box-anchor" onclick="toggleBox(this)">
                 <h3>Wieso Art-Invest?</h3>
                 <div class="content">
                     Von der ersten Interaktion mit Jeremias, einem Eurer Investmentmanager, über die Unternehmensphilosophie der vertikalen Integration, bis zur Nähe zu meinem Zuhause. Auf den ersten Blick verspricht Art-Invest ein tolles Arbeitsklima, spannende Projekte und eine Anbindung an einen Hotelmarkt, in dem ich aufgewachsen bin.
                 </div>
             </div>
 
-            <!-- Box 2 (Rechte Spalte): Mehr Wert als Erfahrung -->
-            <div class="asset-box box-strategy">
+            <!-- Box 2 (Statement): Mehr Wert als Erfahrung -->
+            <div class="asset-box box-strategy" onclick="toggleBox(this)">
                 <h3>Mehr Wert als nur Erfahrung</h3>
                 <div class="content">
                     Egal, was in den nächsten Kacheln so steht, am wichtigsten ist mir, Wert durch Menschlichkeit und Ambition zu schaffen. Ich bringe Freude und Herzlichkeit, wo möglich. Ich verspüre Ernsthaftigkeit und Respekt, wo nötig. Und ich tue Dinge ungefragt, für die andere gefragt werden müssen. Und so erwarte ich das auch von meinen Kollegen und Arbeitgebern.
                 </div>
             </div>
 
-            <!-- Box 3 (Mitte Links): International Mindset -->
-            <div class="asset-box box-network">
+            <!-- Box 3 (Mid-Left): International Mindset -->
+            <div class="asset-box box-network" onclick="toggleBox(this)">
                 <h3>Internationales Mindset in Deutschland geboren</h3>
                 <div class="content">
                     Meine Karriere habe ich in einer deutschen Hotelkette – Althoff Hotels – angefangen, um dann bald zu einem der internationalsten Unternehmen zu gehen – NEOM. So bringe ich sowohl Verständnis und Gespür für deutsche Kultur, als auch internationale Erfahrung und Expat-Standards mit.
@@ -210,15 +236,15 @@
             </div>
 
             <!-- Box 4: Digitaler CV -->
-            <div class="asset-box box-tool" onclick="window.open('https://calogerogranatella.github.io/', '_blank')">
+            <div class="asset-box box-tool" onclick="handleCvClick(event)">
                 <h3>Digitaler CV</h3>
                 <div class="content">
-                    Hier klicken, um meinen digitalen, interaktiven CV zu sehen.
+                    Hier klicken, um meinen digitalen, interaktiven CV auf GitHub zu sehen.
                 </div>
             </div>
 
             <!-- Box 5: Operative Wurzeln -->
-            <div class="asset-box box-foundation">
+            <div class="asset-box box-foundation" onclick="toggleBox(this)">
                 <h3>Operative Wurzeln</h3>
                 <div class="content">
                     Mit meiner Kochausbildung verstehe ich Hotels sowohl von innen nach außen – vom Kühlhaus zum Gast – als auch von außen nach innen – vom Gast zum Koch. So habe ich gelernt, dass der Wert eines Hotels nicht bei der Marke oder dem Management liegt, sondern in der Operativen.
@@ -226,7 +252,7 @@
             </div>
 
             <!-- Box 6: Finanzen -->
-            <div class="asset-box box-vision">
+            <div class="asset-box box-vision" onclick="toggleBox(this)">
                 <h3>Blühen in Finanzen</h3>
                 <div class="content">
                     Seit dem Studium blühe ich für Zahlen und Muster. Ob als Jahrgangsbester in Finance. Der, der von Freunden um Hilfe bei Interviews für Investmentrollen gebeten wurde. Oder bei NEOM von Feasibility Manager zum Software-Produktmanager im Asset-Management. Finanzen liegen mir.
@@ -245,8 +271,27 @@
     </div>
 
     <script>
+        function toggleBox(element) {
+            // Only toggle if we are in mobile/tablet mode (1024px or less)
+            if (window.innerWidth <= 1024) {
+                element.classList.toggle('active');
+            }
+        }
+
+        function handleCvClick(event) {
+            // CV Box logic: Always link out, but toggle description on mobile first if needed
+            if (window.innerWidth <= 1024) {
+                const box = event.currentTarget;
+                if (!box.classList.contains('active')) {
+                    box.classList.add('active');
+                    return;
+                }
+            }
+            window.open('https://calogerogranatella.github.io/', '_blank');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("Strategic Portfolio Content Swapped | Verification Complete");
+            console.log("Mobile-First Portfolio Engine Active | Sticky Header Configured");
         });
     </script>
 
